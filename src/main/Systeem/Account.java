@@ -55,4 +55,12 @@ public class Account {
     public int checkScore() {
         return getQuiz().eindigQuiz();
     }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
 }
