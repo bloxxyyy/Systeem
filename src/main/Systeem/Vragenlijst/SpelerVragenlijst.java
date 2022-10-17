@@ -1,22 +1,16 @@
-package Systeem;
+package Systeem.Vragenlijst;
+
+import java.time.LocalDate;
 
 public class SpelerVragenlijst {
-    private Account account;
+    private int lifetimeBest;
+    private LocalDate koopdatum;
     private Vragenlijst vragenlijst;
 
-    private int lifetimeBest = 0;
-
-    public SpelerVragenlijst(Account account, Vragenlijst vragenlijst) {
-        this.account = account;
+    public SpelerVragenlijst(Vragenlijst vragenlijst) {
+        this.lifetimeBest = 0;
+        this.koopdatum = java.time.LocalDate.now();
         this.vragenlijst = vragenlijst;
-    }
-
-    public Account getAccount() {
-        return account;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
     }
 
     public Vragenlijst getVragenlijst() {

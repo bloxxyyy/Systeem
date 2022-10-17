@@ -1,14 +1,14 @@
 package Systeem.Vraag;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class OpenVraag implements IVraag {
     private int punten;
     private String vraagtekst;
     private QuizVraagAntwoord quizVraagAntwoord;
-    private final ArrayList<CorrectAntwoord> correctAntwoordList;
+    private final List<String> correctAntwoordList;
 
-    public OpenVraag(int punten, String vraagtekst, ArrayList<CorrectAntwoord> correctAntwoordList) {
+    public OpenVraag(int punten, String vraagtekst, List<String> correctAntwoordList) {
         this.punten = punten;
         this.vraagtekst = vraagtekst;
         this.correctAntwoordList = correctAntwoordList;
@@ -38,7 +38,7 @@ public class OpenVraag implements IVraag {
         return quizVraagAntwoord;
     }
 
-    public ArrayList<CorrectAntwoord> getCorrectAntwoordList() {
+    public List<String> getCorrectAntwoordList() {
         return correctAntwoordList;
     }
 

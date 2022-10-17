@@ -1,20 +1,22 @@
 package Systeem.Vraag;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class MeerkeuzeVraag implements IVraag {
     private int punten;
     private String vraagtekst;
 
-    private ArrayList<AntwoordKeuze> antwoordKeuzeLijst;
+    private List<String> antwoordKeuzeLijst;
 
     private QuizVraagAntwoord quizVraagAntwoord;
-    private final ArrayList<CorrectAntwoord> correctAntwoordList;
+    private final String correctAntwoord;
 
-    public MeerkeuzeVraag(int punten, String vraagtekst, ArrayList<CorrectAntwoord> correctAntwoordList, ArrayList<AntwoordKeuze> antwoordKeuzeLijst) {
+    public MeerkeuzeVraag(int punten, String vraagtekst, String correctAntwoord, List<String> antwoordKeuzeLijst) {
         this.punten = punten;
         this.vraagtekst = vraagtekst;
-        this.correctAntwoordList = correctAntwoordList;
+        this.correctAntwoord = correctAntwoord;
         this.antwoordKeuzeLijst = antwoordKeuzeLijst;
     }
 
@@ -33,8 +35,8 @@ public class MeerkeuzeVraag implements IVraag {
     public String getVraagtekst() {
         StringBuilder tekst = new StringBuilder(vraagtekst + " | ");
 
-        for (AntwoordKeuze antwoordKeuze : antwoordKeuzeLijst) {
-            tekst.append(antwoordKeuze.getAntwoordKeuze()).append(", ");
+        for (String antwoordKeuze : antwoordKeuzeLijst) {
+            tekst.append(antwoordKeuze).append(", ");
         }
 
         return tekst.toString();
@@ -48,7 +50,7 @@ public class MeerkeuzeVraag implements IVraag {
         return quizVraagAntwoord;
     }
 
-    public ArrayList<CorrectAntwoord> getCorrectAntwoordList() {
-        return correctAntwoordList;
+    public List<String> getCorrectAntwoordList() {
+        return Arrays.stream(new String[] {correctAntwoord }).toList();
     }
 }

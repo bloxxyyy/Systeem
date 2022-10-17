@@ -1,68 +1,84 @@
 package Systeem;
 
+import Systeem.Vragenlijst.SpelerVragenlijst;
+import Systeem.Vragenlijst.Vragenlijst;
+
+import java.util.ArrayList;
+import java.util.Objects;
+import java.util.Random;
 import java.util.Scanner;
 
+import static Systeem.Database.VragenlijstList;
+
 public class Finch {
-    private Account account;
+    private ArrayList<Account> accounts = new ArrayList<>();
     private FinchShop finchShop;
+    private Account loggedInAccount;
 
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        Finch finch = new Finch(new FinchShop());
+    public Finch() {
+        finchShop = new FinchShop();
 
-        // Spelen Quiz
-        finch.Login("root", "pass");
+        //test purpose
+        accounts.add(new Account("test", "test"));
 
-        var cadeau = new SpelerVragenlijst(finch.account, finch.finchShop.krijgCadeau());
-        finch.account.OntvangCadeau(cadeau); // register func
-        var cadeau2 = new SpelerVragenlijst(finch.account, finch.finchShop.krijgCadeau());
-        finch.account.OntvangCadeau(cadeau2); // register func
+    }
 
-        boolean isRunning = true;
+    public void showMainScreen() {
+        System.out.println("Welkom bij Finch");
+        System.out.println("Registreer of Login");
+    }
 
-        while(isRunning) {
-            // toon thema's
-            var hashset = finch.account.getThemasBijVragenlijsten();
-            Thema[] themas = finch.account.getThemasBijVragenlijsten().toArray(new Thema[hashset.size()]);
-            for (int i = 0; i < themas.length; i++) {
-                System.out.println(i + ": " + themas[i].getName());
+    public boolean Registreer(String[] account) {
+        if (accounts.size() != 0) {
+            for (Account a : accounts) {
+                if (Objects.equals(a.getUsername(), account[0])) {
+                    return false;
+                }
             }
-
-            var choice = sc.nextInt();
-            var thema = themas[choice];
-
-            var lijsten = finch.account.toonVragenlijstenBijthema(thema);
-            for (int i = 0; i < lijsten.size(); i++) {
-                System.out.println(i + ": " + lijsten.get(i));
-            }
-
-            var choice2 = sc.nextInt();
-            var vragenlijst = finch.account.getSpelerVragenlijst(lijsten.get(choice2));
-
-            finch.account.maakQuizMetVragen(vragenlijst);
-
-            System.out.println("CurrentLifetimebest: " + finch.account.getSpelerVragenlijst(vragenlijst).getLifetimeBest());
-
-            finch.speelQuiz(sc, vragenlijst);
-
-            // End Spelen Quiz
         }
+
+        var user = new Account(account[0], account[1]);
+        var cadeaus = krijgCadeau();
+        for (int i = 0; i < cadeaus.length; i++) {
+            user.setSpelerVragenlijst(new SpelerVragenlijst(cadeaus[i]));
+        }
+        accounts.add(user);
+        return true;
     }
 
-    public Finch(FinchShop finchShop) {
-        this.finchShop = finchShop;
+    public boolean Login(String[] account) {
+        for (Account a : accounts) {
+            if (Objects.equals(a.getUsername(), account[0]) && Objects.equals(a.getPassword(), account[1])) {
+                loggedInAccount = a;
+                return true;
+            }
+        }
+        return false;
     }
 
-    public void Login(String username, String password) {
-        account = new Account(username, password);
+    public ArrayList<SpelerVragenlijst> showVragenlijst() {
+        return loggedInAccount.getSpelerVragenlijst();
     }
 
-    public void speelQuiz(Scanner sc, SpelerVragenlijst keuze) {
-        for (int i = 0; i < account.getQuiz().getVraagList().size(); i++) {
-            var vraag = account.getQuiz().getVolgendeVraagTekst();
+    // TODO implement
+    public Vragenlijst[] krijgCadeau() {
+        return new Random()
+                .ints(0, VragenlijstList.size())
+                .distinct()
+                .limit(2)
+                .mapToObj(VragenlijstList::get).toArray(Vragenlijst[]::new);
+    }
+
+    public Account getLoggedInAccount() {
+        return loggedInAccount;
+    }
+
+    public void speelQuiz(Scanner sc, SpelerVragenlijst keuze, Quiz quiz,Account account) {
+        for (int i = 0; i < quiz.getVraagList().size(); i++) {
+            var vraag = quiz.getVolgendeVraagTekst();
             System.out.println(vraag);
             var givenAnswer = sc.next();
-            account.getQuiz().beantwoordVolgendeVraag(givenAnswer);
+            quiz.beantwoordVolgendeVraag(givenAnswer);
         }
 
         var score = account.checkScore();

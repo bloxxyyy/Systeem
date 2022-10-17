@@ -2,6 +2,7 @@ package Systeem;
 
 import Systeem.Vraag.QuizVraagAntwoord;
 import Systeem.Vraag.IVraag;
+import Systeem.Vragenlijst.SpelerVragenlijst;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +57,7 @@ public class Quiz {
            var antwoordList = vraagList.get(i).getCorrectAntwoordList();
 
             for (int y = 0; y < antwoordList.size(); y++) {
-                var correctAntwoord = antwoordList.get(y).getAntwoord();
+                var correctAntwoord = antwoordList.get(y);
                 if (Objects.equals(correctAntwoord, gegevenAntwoord)) {
                     inLijst = true;
                     gespeeldeQuiz.addPunten(puntenTelling);
