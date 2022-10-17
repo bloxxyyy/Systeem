@@ -1,5 +1,6 @@
 package Systeem.DatabaseStrategie;
 
+import Systeem.PuntenStrategie.PuntenStrategie;
 import Systeem.Vraag.*;
 import Systeem.Vragenlijst.Thema;
 import Systeem.Vragenlijst.Vragenlijst;
@@ -26,11 +27,11 @@ public class DucthDatabaseStragie implements IDatabaseStrategie {
 
         var VragenList = new ArrayList<IVraag>();
         for (var themaInfo : InfoOpen) {
-            VragenList.add(new OpenVraag(themaInfo.punten(), themaInfo.title(), Arrays.stream(themaInfo.antwoorden()).toList()));
+            VragenList.add(new OpenVraag(new PuntenStrategie(), themaInfo.title(), Arrays.stream(themaInfo.antwoorden()).toList()));
         }
 
         for (var themaInfo2 : InfoMeerkeuze) {
-            VragenList.add(new MeerkeuzeVraag(themaInfo2.punten(), themaInfo2.title(), themaInfo2.correctAntwoord(), Arrays.stream(themaInfo2.antwoorden()).toList()));
+            VragenList.add(new MeerkeuzeVraag(new PuntenStrategie(), themaInfo2.title(), themaInfo2.correctAntwoord(), Arrays.stream(themaInfo2.antwoorden()).toList()));
         }
         return VragenList;
     }

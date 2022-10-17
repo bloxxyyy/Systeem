@@ -1,25 +1,21 @@
 package Systeem.Vraag;
 
+import Systeem.PuntenStrategie.IPuntenStrategie;
+
 import java.util.List;
 
-public class OpenVraag implements IVraag {
-    private int punten;
-    private String vraagtekst;
-    private QuizVraagAntwoord quizVraagAntwoord;
+public class OpenVraag extends Vraag {
     private final List<String> correctAntwoordList;
 
-    public OpenVraag(int punten, String vraagtekst, List<String> correctAntwoordList) {
-        this.punten = punten;
+    public OpenVraag(IPuntenStrategie strategie, String vraagtekst, List<String> correctAntwoordList) {
+        this.strategie = strategie;
         this.vraagtekst = vraagtekst;
         this.correctAntwoordList = correctAntwoordList;
     }
 
-    public void setQuizVraagAntwoord(QuizVraagAntwoord quizVraagAntwoord) {
-        this.quizVraagAntwoord = quizVraagAntwoord;
-    }
-
+    @Override
     public int getPunten() {
-        return punten;
+        return strategie.getOpenVraagPunten();
     }
 
     public void setPunten(int punten) {
@@ -30,16 +26,7 @@ public class OpenVraag implements IVraag {
         return vraagtekst;
     }
 
-    public void setVraagtekst(String vraagtekst) {
-        this.vraagtekst = vraagtekst;
-    }
-
-    public QuizVraagAntwoord getQuizVraagAntwoord() {
-        return quizVraagAntwoord;
-    }
-
     public List<String> getCorrectAntwoordList() {
         return correctAntwoordList;
     }
-
 }

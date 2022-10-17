@@ -4,6 +4,8 @@ import Systeem.DatabaseStrategie.IDatabaseStrategie;
 import Systeem.Vragenlijst.SpelerVragenlijst;
 import Systeem.Vragenlijst.Vragenlijst;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
@@ -76,13 +78,16 @@ public class Finch {
         return loggedInAccount;
     }
 
-    public void speelQuiz(Scanner sc, SpelerVragenlijst keuze, Quiz quiz,Account account) {
+    public void speelQuiz(Scanner sc, SpelerVragenlijst keuze, Quiz quiz, Account account) {
+        Instant start = Instant.now();
         for (int i = 0; i < quiz.getVraagList().size(); i++) {
             var vraag = quiz.getVolgendeVraagTekst();
             System.out.println(vraag);
             var givenAnswer = sc.next();
             quiz.beantwoordVolgendeVraag(givenAnswer);
         }
+        Instant end = Instant.now();
+        quiz.setVerstrekenTijd((int) Duration.between(start, end).toSeconds());
 
         var score = account.checkScore();
 
@@ -90,6 +95,7 @@ public class Finch {
 
         spelerVragenlijst.updateLifetimeBest(score);
         System.out.println("Gehaalde Score: " + score);
+        System.out.println("Quiz Tijd: " + quiz.getVerstrekenTijd() + " seconden");
         System.out.println("Lifetime best: " + spelerVragenlijst.getLifetimeBest());
     }
 }
