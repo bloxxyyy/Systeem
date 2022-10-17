@@ -2,6 +2,7 @@ package Systeem;
 
 import Systeem.Vraag.QuizVraagAntwoord;
 import Systeem.Vraag.IVraag;
+import Systeem.Vragenlijst.SpelerVragenlijst;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,56 +22,56 @@ public class Quiz {
         this.vraagList = vraagList;
     }
 
-    public void getVragen(SpelerVragenlijst lijst) {
-        vraagList = account.getSpelerVragenlijst(lijst).getVragenlijst().getRandomVragen();
-    }
-
-    public List<IVraag> getVraagList() {
-        return vraagList;
-    }
-
-    public String getVolgendeVraagTekst() {
-        return vraagList.get(vraagIndex).getVraagtekst();
-    }
-
-    public void beantwoordVolgendeVraag(String givenAnswer) {
-        if (quizVraagAntwoordList == null) quizVraagAntwoordList = new ArrayList<>();
-        var quizVraag = new QuizVraagAntwoord(this, vraagList.get(vraagIndex), givenAnswer);
-        vraagList.get(vraagIndex).setQuizVraagAntwoord(quizVraag);
-        quizVraagAntwoordList.add(quizVraag);
-        vraagIndex++;
-    }
-
-    public void controleerGemaakteQuiz() {
-        gespeeldeQuiz = new GespeeldeQuiz(this, account, verstrekenTijd);
-        if (checkVragen()) account.updateSaldo(2);
-    }
-
-    private boolean checkVragen() {
-        boolean allesGoed = true;
-
-        for (int i = 0; i < quizVraagAntwoordList.size(); i++) {
-           var gegevenAntwoord = quizVraagAntwoordList.get(i).Antwoord;
-
-           boolean inLijst = false;
-           var antwoordList = vraagList.get(i).getCorrectAntwoordList();
-
-            for (int y = 0; y < antwoordList.size(); y++) {
-                var correctAntwoord = antwoordList.get(y).getAntwoord();
-                if (Objects.equals(correctAntwoord, gegevenAntwoord)) {
-                    inLijst = true;
-                    gespeeldeQuiz.addPunten(puntenTelling);
-                }
-            }
-
-            if (!inLijst)  allesGoed = false;
-        }
-
-        return allesGoed;
-    }
-
-    public int eindigQuiz() {
-        controleerGemaakteQuiz();
-        return gespeeldeQuiz.getPunten();
-    }
+//    public void getVragen(SpelerVragenlijst lijst) {
+//        vraagList = account.getSpelerVragenlijst(lijst).getVragenlijst().getRandomVragen();
+//    }
+//
+//    public List<IVraag> getVraagList() {
+//        return vraagList;
+//    }
+//
+//    public String getVolgendeVraagTekst() {
+//        return vraagList.get(vraagIndex).getVraagtekst();
+//    }
+//
+//    public void beantwoordVolgendeVraag(String givenAnswer) {
+//        if (quizVraagAntwoordList == null) quizVraagAntwoordList = new ArrayList<>();
+//        var quizVraag = new QuizVraagAntwoord(this, vraagList.get(vraagIndex), givenAnswer);
+//        vraagList.get(vraagIndex).setQuizVraagAntwoord(quizVraag);
+//        quizVraagAntwoordList.add(quizVraag);
+//        vraagIndex++;
+//    }
+//
+//    public void controleerGemaakteQuiz() {
+//        gespeeldeQuiz = new GespeeldeQuiz(this, account, verstrekenTijd);
+//        if (checkVragen()) account.updateSaldo(2);
+//    }
+//
+//    private boolean checkVragen() {
+//        boolean allesGoed = true;
+//
+//        for (int i = 0; i < quizVraagAntwoordList.size(); i++) {
+//           var gegevenAntwoord = quizVraagAntwoordList.get(i).Antwoord;
+//
+//           boolean inLijst = false;
+//           var antwoordList = vraagList.get(i).getCorrectAntwoordList();
+//
+//            for (int y = 0; y < antwoordList.size(); y++) {
+//                var correctAntwoord = antwoordList.get(y).getAntwoord();
+//                if (Objects.equals(correctAntwoord, gegevenAntwoord)) {
+//                    inLijst = true;
+//                    gespeeldeQuiz.addPunten(puntenTelling);
+//                }
+//            }
+//
+//            if (!inLijst)  allesGoed = false;
+//        }
+//
+//        return allesGoed;
+//    }
+//
+//    public int eindigQuiz() {
+//        controleerGemaakteQuiz();
+//        return gespeeldeQuiz.getPunten();
+//    }
 }

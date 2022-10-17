@@ -1,9 +1,10 @@
+import Systeem.Account;
+import Systeem.Database;
 import Systeem.Finch;
-import Systeem.FinchShop;
-import Systeem.SpelerVragenlijst;
-import Systeem.Thema;
 
 import java.util.Scanner;
+
+import static Systeem.Database.getVragenlijsten;
 
 public class OOADCasus {
     private static String mainScreenOption;
@@ -13,19 +14,32 @@ public class OOADCasus {
 
         Scanner sc = new Scanner(System.in);
         Finch finch = new Finch();
+        Database.getVragenlijsten();
+        var data = Database.VragenlijstList;
 
-        showMainScreen(sc);
+        finch.showMainScreen();
+        mainScreenOption = sc.next();
         if (mainScreenOption.equalsIgnoreCase("REG")) {
-            finch.Registreer(FinchAuthorization(sc));
-            showMainScreen(sc);
+            if (finch.Registreer(FinchAuthorization(sc))) {
+                finch.showMainScreen();
+                mainScreenOption = sc.next();
+            } else {
+                System.out.println("Deze gebruikersnaam bestaat al");
+                finch.showMainScreen();
+                mainScreenOption = sc.next();
+            }
         }
         if (mainScreenOption.equalsIgnoreCase("LOG")) {
-            if (finch.Login(FinchAuthorization(sc))) {
-                startFinch();
+            if (finch.Login(FinchAuthorization(sc)) == null) {
+                System.out.println("U heeft uw gegevens verkeerd ingevoerd of geen account");
+                finch.showMainScreen();
+                mainScreenOption = sc.next();
             }
-            System.out.println("U heeft uw gegevens verkeerd ingevoerd of geen account");
-            showMainScreen(sc);
+
+            System.out.println("Selecteer uw vragenlijst op onderwerp");
+            System.out.println(finch.showVragenlijst());
         }
+
 
 
         // Spelen Quiz
@@ -65,19 +79,6 @@ public class OOADCasus {
 //
 //            // End Spelen Quiz
 //        }
-    }
-
-    private static void startFinch() {
-        isRunning = true;
-        while (isRunning) {
-            System.out.println("working....");
-        }
-    }
-
-    private static void showMainScreen(Scanner sc) {
-        System.out.println("Welkom bij Finch");
-        System.out.println("Registreer of Login");
-        mainScreenOption = sc.next();
     }
 
     private static String[] FinchAuthorization(Scanner sc) {

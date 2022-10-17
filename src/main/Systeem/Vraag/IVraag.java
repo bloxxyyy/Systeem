@@ -1,6 +1,6 @@
 package Systeem.Vraag;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public interface IVraag {
     public void setQuizVraagAntwoord(QuizVraagAntwoord quizVraagAntwoord);
@@ -9,5 +9,5 @@ public interface IVraag {
     public String getVraagtekst();
     public void setVraagtekst(String vraagtekst);
     public QuizVraagAntwoord getQuizVraagAntwoord();
-    public ArrayList<CorrectAntwoord> getCorrectAntwoordList();
+    public List<String> getCorrectAntwoordList();
 }
