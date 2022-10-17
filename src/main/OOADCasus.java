@@ -1,23 +1,21 @@
-import Systeem.Database;
+import Systeem.Database.DucthDatabaseStragie;
 import Systeem.Finch;
 
 import java.util.Scanner;
 
 public class OOADCasus {
-    private static String mainScreenOption;
-    private static boolean isRunning = false;
+    private static final boolean isRunning = false;
 
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
-        Finch finch = new Finch();
-        Database.getVragenlijsten();
-        var data = Database.VragenlijstList;
+        Finch finch = new Finch(new DucthDatabaseStragie());
+        var data = DucthDatabaseStragie.VragenlijstList;
 
         boolean isLoggedin = false;
         while (!isLoggedin) {
             finch.showMainScreen();
-            mainScreenOption = sc.next();
+            String mainScreenOption = sc.next();
             if (mainScreenOption.equalsIgnoreCase("REG")) {
                 if (!finch.Registreer(AccountInput(sc))) {
                     System.out.println("Deze gebruikersnaam bestaat al");
@@ -53,7 +51,7 @@ public class OOADCasus {
 
             System.out.println("CurrentLifetimebest: " + vragenlijst.getLifetimeBest());
 
-            finch.speelQuiz(sc, vragenlijst,account.getQuiz(),account);
+            finch.speelQuiz(sc, vragenlijst, account.getQuiz(), account);
 
             // End Spelen Quiz
         }

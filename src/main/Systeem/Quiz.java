@@ -56,8 +56,7 @@ public class Quiz {
            boolean inLijst = false;
            var antwoordList = vraagList.get(i).getCorrectAntwoordList();
 
-            for (int y = 0; y < antwoordList.size(); y++) {
-                var correctAntwoord = antwoordList.get(y);
+            for (String correctAntwoord : antwoordList) {
                 if (Objects.equals(correctAntwoord, gegevenAntwoord)) {
                     inLijst = true;
                     gespeeldeQuiz.addPunten(puntenTelling);
