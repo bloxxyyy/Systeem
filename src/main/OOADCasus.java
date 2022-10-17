@@ -1,4 +1,4 @@
-import Systeem.Database.DucthDatabaseStragie;
+import Systeem.DatabaseStrategie.DucthDatabaseStragie;
 import Systeem.Finch;
 
 import java.util.Scanner;

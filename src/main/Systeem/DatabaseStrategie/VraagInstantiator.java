@@ -1,4 +1,4 @@
-package Systeem;
+package Systeem.DatabaseStrategie;
 
 import Systeem.Vragenlijst.Thema;
 

@@ -1,6 +1,6 @@
 package Systeem;
 
-import Systeem.Database.IDatabaseStrategie;
+import Systeem.DatabaseStrategie.IDatabaseStrategie;
 import Systeem.Vragenlijst.SpelerVragenlijst;
 import Systeem.Vragenlijst.Vragenlijst;
 
@@ -9,7 +9,7 @@ import java.util.Objects;
 import java.util.Random;
 import java.util.Scanner;
 
-import static Systeem.Database.DucthDatabaseStragie.VragenlijstList;
+import static Systeem.DatabaseStrategie.DucthDatabaseStragie.VragenlijstList;
 
 public class Finch {
     private ArrayList<Account> accounts = new ArrayList<>();

@@ -1,7 +1,6 @@
-package Systeem.Database;
+package Systeem.DatabaseStrategie;
 
 import Systeem.Vraag.*;
-import Systeem.VraagInstantiator;
 import Systeem.Vragenlijst.Thema;
 import Systeem.Vragenlijst.Vragenlijst;
 
