@@ -24,7 +24,7 @@ public class Vragenlijst {
         return new Random()
                 .ints(0, vraagList.size())
                 .distinct() // ensure all the ids are different
-                .limit(10)
+                .limit(1)
                 .mapToObj(vraagList::get)
                 .collect(Collectors.toList());
     }

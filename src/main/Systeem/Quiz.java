@@ -47,7 +47,8 @@ public class Quiz {
     public void controleerGemaakteQuiz() {
         gespeeldeQuiz = new GespeeldeQuiz(this, account, verstrekenTijd);
         gespeeldeQuiz.addPunten(strategie.calculateBonusPunten(verstrekenTijd));
-        if (checkVragen()) account.updateSaldo(2);
+        if (checkVragen()){ account.updateSaldo(2);gespeeldeQuiz.addPunten(strategie.getPuntenAlleVragenGoed());}
+
     }
 
     private boolean checkVragen() {

@@ -6,4 +6,9 @@ public class BonusPuntenStrategie implements IBonusPuntenStrategie {
     public int calculateBonusPunten(int tijd) {
         return tijd/5;
     }
+
+    @Override
+    public int getPuntenAlleVragenGoed() {
+        return 5;
+    }
 }
