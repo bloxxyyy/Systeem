@@ -28,4 +28,7 @@ public class Vragenlijst {
                 .mapToObj(vraagList::get)
                 .collect(Collectors.toList());
     }
+    public String getOnderwerp() {
+        return onderwerp;
+    }
 }

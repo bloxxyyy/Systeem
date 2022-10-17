@@ -28,16 +28,16 @@ public class VraagInstantiator {
         open.put(Thema.Muziek, openVraagLijstMuziek);
 
         var meerkeuzeVraagLijstMuziek = new ArrayList<InfoMeerkeuzeVraag>();
-        meerkeuzeVraagLijstMuziek.add(new InfoMeerkeuzeVraag("Wanneer is metal uitgevonden?", new String[]{" A 1990", "B 2002","C 2004","D 1999"},"A", 1));
-        meerkeuzeVraagLijstMuziek.add(new InfoMeerkeuzeVraag("Wanneer is pop uitgevonden?", new String[]{" A 1990", "B 2002","C 2004","D 1999"}, "A", 1));
-        meerkeuzeVraagLijstMuziek.add(new InfoMeerkeuzeVraag("Wanneer is klasiek uitgevonden?", new String[]{" A 1990", "B 2002","C 2004","D 1999"}, "A", 1));
-        meerkeuzeVraagLijstMuziek.add(new InfoMeerkeuzeVraag("Wie is de maker van Don't Let Me Down?", new String[]{"The Chainsmokers", "chainsmokers"}, "A", 1));
-        meerkeuzeVraagLijstMuziek.add(new InfoMeerkeuzeVraag("Wie is de maker van Work from Home?", new String[]{" A Meghan Trainor", "B Fifth Harmony","C DJ Snake","D Ariana Grande"}, "B", 1));
-        meerkeuzeVraagLijstMuziek.add(new InfoMeerkeuzeVraag("Wie is de maker van What Do You Mean?", new String[]{" A The Chainsmokers", "B Justin Bieber","C DJ Snake","D Sia"}, "B", 1));
-        meerkeuzeVraagLijstMuziek.add(new InfoMeerkeuzeVraag("Wie is de maker van Let Me Love You ft. Justin Bieber?", new String[]{" A The Chainsmokers", "B Fifth Harmony","C DJ Snake","D Ariana Grande"}, "C", 1));
-        meerkeuzeVraagLijstMuziek.add(new InfoMeerkeuzeVraag("Wie is de maker van All About That Bass?", new String[]{" A Meghan Trainor", "B Fifth Harmony","C DJ Snake","D Ariana Grande"}, "A", 1));
-        meerkeuzeVraagLijstMuziek.add(new InfoMeerkeuzeVraag("Wie is de maker van Baby I?", new String[]{" A The Chainsmokers", "B Fifth Harmony","C DJ Snake","D Ariana Grande"}, "D", 1));
-        meerkeuzeVraagLijstMuziek.add(new InfoMeerkeuzeVraag("Wie is de maker van Cheap Thrills?", new String[]{" A The Chainsmokers", "B Justin Bieber","C DJ Snake","D Sia"}, "D", 1));
+        meerkeuzeVraagLijstMuziek.add(new InfoMeerkeuzeVraag("Wanneer is metal uitgevonden?", new String[]{"A 1990", "B 2002","C 2004","D 1999"},"A", 1));
+        meerkeuzeVraagLijstMuziek.add(new InfoMeerkeuzeVraag("Wanneer is pop uitgevonden?", new String[]{"A 1990", "B 2002","C 2004","D 1999"}, "A", 1));
+        meerkeuzeVraagLijstMuziek.add(new InfoMeerkeuzeVraag("Wanneer is klasiek uitgevonden?", new String[]{"A 1990", "B 2002","C 2004","D 1999"}, "A", 1));
+        meerkeuzeVraagLijstMuziek.add(new InfoMeerkeuzeVraag("Wie is de maker van Don't Let Me Down?", new String[]{"A The Chainsmokers", "B Fifth Harmony","C DJ Snake","D Ariana Grande"}, "A", 1));
+        meerkeuzeVraagLijstMuziek.add(new InfoMeerkeuzeVraag("Wie is de maker van Work from Home?", new String[]{"A Meghan Trainor", "B Fifth Harmony","C DJ Snake","D Ariana Grande"}, "B", 1));
+        meerkeuzeVraagLijstMuziek.add(new InfoMeerkeuzeVraag("Wie is de maker van What Do You Mean?", new String[]{"A The Chainsmokers", "B Justin Bieber","C DJ Snake","D Sia"}, "B", 1));
+        meerkeuzeVraagLijstMuziek.add(new InfoMeerkeuzeVraag("Wie is de maker van Let Me Love You ft. Justin Bieber?", new String[]{"A The Chainsmokers", "B Fifth Harmony","C DJ Snake","D Ariana Grande"}, "C", 1));
+        meerkeuzeVraagLijstMuziek.add(new InfoMeerkeuzeVraag("Wie is de maker van All About That Bass?", new String[]{"A Meghan Trainor", "B Fifth Harmony","C DJ Snake","D Ariana Grande"}, "A", 1));
+        meerkeuzeVraagLijstMuziek.add(new InfoMeerkeuzeVraag("Wie is de maker van Baby I?", new String[]{"A The Chainsmokers", "B Fifth Harmony","C DJ Snake","D Ariana Grande"}, "D", 1));
+        meerkeuzeVraagLijstMuziek.add(new InfoMeerkeuzeVraag("Wie is de maker van Cheap Thrills?", new String[]{"A The Chainsmokers", "B Justin Bieber","C DJ Snake","D Sia"}, "D", 1));
         meerkeuze.put(Thema.Muziek, meerkeuzeVraagLijstMuziek);
 
         var openVraagLijstSport = new ArrayList<InfoOpenVraag>();

@@ -6,13 +6,14 @@ import Systeem.Vragenlijst.Vragenlijst;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Random;
+import java.util.Scanner;
 
 import static Systeem.Database.VragenlijstList;
 
 public class Finch {
     private ArrayList<Account> accounts = new ArrayList<>();
     private FinchShop finchShop;
-    private Account loggedAccount;
+    private Account loggedInAccount;
 
     public Finch() {
         finchShop = new FinchShop();
@@ -47,7 +48,7 @@ public class Finch {
     public Account Login(String[] account) {
         for(Account a : accounts){
             if(Objects.equals(a.getUsername(), account[0]) && Objects.equals(a.getPassword(), account[1])){
-                loggedAccount = a;
+                loggedInAccount = a;
                 return a;
             }
         }
@@ -55,7 +56,7 @@ public class Finch {
     }
 
     public ArrayList<SpelerVragenlijst> showVragenlijst(){
-        return loggedAccount.getSpelerVragenlijst();
+        return loggedInAccount.getSpelerVragenlijst();
     }
 
     // TODO implement
@@ -66,23 +67,24 @@ public class Finch {
                 .limit(2)
                 .mapToObj(VragenlijstList::get).toArray(Vragenlijst[]::new);
     }
+    public Account getLoggedInAccount() {
+        return loggedInAccount;
+    }
 
+        public void speelQuiz(Scanner sc, SpelerVragenlijst keuze) {
+        for (int i = 0; i < getLoggedInAccount().getQuiz().getVraagList().size(); i++) {
+            var vraag = getLoggedInAccount().getQuiz().getVolgendeVraagTekst();
+            System.out.println(vraag);
+            var givenAnswer = sc.next();
+            getLoggedInAccount().getQuiz().beantwoordVolgendeVraag(givenAnswer);
+        }
 
+        var score = getLoggedInAccount().checkScore();
 
-//    public void speelQuiz(Scanner sc, SpelerVragenlijst keuze) {
-//        for (int i = 0; i < account.getQuiz().getVraagList().size(); i++) {
-//            var vraag = account.getQuiz().getVolgendeVraagTekst();
-//            System.out.println(vraag);
-//            var givenAnswer = sc.next();
-//            account.getQuiz().beantwoordVolgendeVraag(givenAnswer);
-//        }
-//
-//        var score = account.checkScore();
-//
-//        var spelerVragenlijst = account.getSpelerVragenlijst(keuze);
-//
-//        spelerVragenlijst.updateLifetimeBest(score);
-//        System.out.println("Gehaalde Score: " + score);
-//        System.out.println("Lifetime best: " + spelerVragenlijst.getLifetimeBest());
-//    }
+        var spelerVragenlijst = getLoggedInAccount().getSpelerVragenlijst(keuze);
+
+        spelerVragenlijst.updateLifetimeBest(score);
+        System.out.println("Gehaalde Score: " + score);
+        System.out.println("Lifetime best: " + spelerVragenlijst.getLifetimeBest());
+    }
 }

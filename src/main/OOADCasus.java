@@ -1,10 +1,7 @@
-import Systeem.Account;
 import Systeem.Database;
 import Systeem.Finch;
 
 import java.util.Scanner;
-
-import static Systeem.Database.getVragenlijsten;
 
 public class OOADCasus {
     private static String mainScreenOption;
@@ -40,45 +37,26 @@ public class OOADCasus {
             System.out.println(finch.showVragenlijst());
         }
 
+        boolean isRunning = true;
 
+        while (isRunning) {
 
-        // Spelen Quiz
-//        finch.Login("root", "pass");
-//
-//        var cadeau = new SpelerVragenlijst(finch.account, finch.finchShop.krijgCadeau());
-//        finch.account.OntvangCadeau(cadeau); // register func
-//        var cadeau2 = new SpelerVragenlijst(finch.account, finch.finchShop.krijgCadeau());
-//        finch.account.OntvangCadeau(cadeau2); // register func
-//
-//        boolean isRunning = true;
-//
-//        while (isRunning) {
-//            // toon thema's
-//            var hashset = finch.account.getThemasBijVragenlijsten();
-//            Thema[] themas = finch.account.getThemasBijVragenlijsten().toArray(new Thema[hashset.size()]);
-//            for (int i = 0; i < themas.length; i++) {
-//                System.out.println(i + ": " + themas[i].getName());
-//            }
-//
-//            var choice = sc.nextInt();
-//            var thema = themas[choice];
-//
-//            var lijsten = finch.account.toonVragenlijstenBijthema(thema);
-//            for (int i = 0; i < lijsten.size(); i++) {
-//                System.out.println(i + ": " + lijsten.get(i));
-//            }
-//
-//            var choice2 = sc.nextInt();
-//            var vragenlijst = finch.account.getSpelerVragenlijst(lijsten.get(choice2));
-//
-//            finch.account.maakQuizMetVragen(vragenlijst);
-//
-//            System.out.println("CurrentLifetimebest: " + finch.account.getSpelerVragenlijst(vragenlijst).getLifetimeBest());
-//
-//            finch.speelQuiz(sc, vragenlijst);
-//
-//            // End Spelen Quiz
-//        }
+            var lijsten = finch.getLoggedInAccount().toonVragenlijsten();
+            for (int i = 0; i < lijsten.size(); i++) {
+                System.out.println(i + ": " + lijsten.get(i).getVragenlijst().getOnderwerp());
+            }
+
+            var choice2 = sc.nextInt();
+            var vragenlijst = finch.getLoggedInAccount().getSpelerVragenlijst(lijsten.get(choice2));
+
+            finch.getLoggedInAccount().maakQuizMetVragen(vragenlijst);
+
+            System.out.println("CurrentLifetimebest: " + finch.getLoggedInAccount().getSpelerVragenlijst(vragenlijst).getLifetimeBest());
+
+            finch.speelQuiz(sc, vragenlijst);
+
+            // End Spelen Quiz
+        }
     }
 
     private static String[] FinchAuthorization(Scanner sc) {
