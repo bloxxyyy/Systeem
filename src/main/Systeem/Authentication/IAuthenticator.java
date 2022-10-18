@@ -7,4 +7,6 @@ public interface IAuthenticator {
     public boolean Login(String[] account);
     public Account getLoggedInAccount();
     public ArrayList<Account> getAccounts();
+
+    int getLastMadeAccount();
 }

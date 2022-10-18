@@ -35,6 +35,11 @@ public class Authenticator implements IAuthenticator {
         return accounts;
     }
 
+    @Override
+    public int getLastMadeAccount() {
+        return accounts.size() - 1;
+    }
+
     public Account getLoggedInAccount() {
         return loggedInAccount;
     }

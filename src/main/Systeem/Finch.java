@@ -44,8 +44,9 @@ public class Finch {
         if (!Auth.Registreer(accountInput)) return false;
 
         var cadeaus = finchShop.krijgCadeau();
+        var accountIndex = Auth.getLastMadeAccount();
         for (Vragenlijst cadeau : cadeaus) {
-            Auth.getAccounts().get(Auth.getAccounts().size() - 1).setSpelerVragenlijst(new SpelerVragenlijst(cadeau));
+            Auth.getAccounts().get(accountIndex).setSpelerVragenlijst(new SpelerVragenlijst(cadeau));
         }
 
         return true;
