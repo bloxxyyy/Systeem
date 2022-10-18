@@ -3,6 +3,7 @@ package Systeem;
 import Systeem.PuntenStrategie.BonusPuntenStrategie;
 import Systeem.Vragenlijst.SpelerVragenlijst;
 
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,13 +28,11 @@ public class Account {
     public String getPassword() {
         return password;
     }
-    public ArrayList<SpelerVragenlijst> getSpelerVragenlijst(){
-        return spelerVragenlijstList;
-    }
     public SpelerVragenlijst getSpelerVragenlijst(SpelerVragenlijst keuze) {
         return spelerVragenlijstList.stream().filter((list) -> list == keuze).findFirst().orElse(null);
     }
     public List<SpelerVragenlijst> toonVragenlijsten() {
+        spelerVragenlijstList.removeIf(spelerVragenlijst -> Period.between(spelerVragenlijst.getKoopdatum(), java.time.LocalDate.now()).getYears() == 1);
         return spelerVragenlijstList;
     }
     public void maakQuizMetVragen(SpelerVragenlijst vragenlijst) {
