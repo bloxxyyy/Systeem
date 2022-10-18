@@ -1,12 +1,10 @@
 package Systeem;
 
+import Systeem.PuntenStrategie.BonusPuntenStrategie;
 import Systeem.Vragenlijst.SpelerVragenlijst;
-import Systeem.Vragenlijst.Thema;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class Account {
     private Quiz quiz;
@@ -47,7 +45,7 @@ public class Account {
     }
 
     public void maakQuizMetVragen(SpelerVragenlijst vragenlijst) {
-        this.quiz = new Quiz(this, vragenlijst.getVragenlijst().getRandomVragen());
+        this.quiz = new Quiz(this, vragenlijst.getVragenlijst().getRandomVragen(),new BonusPuntenStrategie());
     }
 
     public void OntvangCadeau(SpelerVragenlijst cadeau) {

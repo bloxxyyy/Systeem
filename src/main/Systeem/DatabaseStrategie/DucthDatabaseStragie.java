@@ -1,21 +1,24 @@
-package Systeem;
+package Systeem.DatabaseStrategie;
 
+import Systeem.PuntenStrategie.PuntenStrategie;
 import Systeem.Vraag.*;
 import Systeem.Vragenlijst.Thema;
 import Systeem.Vragenlijst.Vragenlijst;
 
 import java.util.*;
 
-public class Database {
+public class DucthDatabaseStragie implements IDatabaseStrategie {
     public static ArrayList<Vragenlijst> VragenlijstList = new ArrayList<>();
 
-    public static void getVragenlijsten() {
+    @Override
+    public void getVragenlijsten() {
         VraagInstantiator.instantiator();
         VragenlijstList.add(new Vragenlijst(Thema.Muziek, getiVraags(Thema.Muziek), "dance"));
         VragenlijstList.add(new Vragenlijst(Thema.SPORT, getiVraags(Thema.SPORT), "voetbal"));
     }
 
-    private static ArrayList<IVraag> getiVraags(Thema thema) {
+    @Override
+    public ArrayList<IVraag> getiVraags(Thema thema) {
         var openLijst = VraagInstantiator.open;
         var meerkeuzeLijst = VraagInstantiator.meerkeuze;
 
@@ -24,11 +27,11 @@ public class Database {
 
         var VragenList = new ArrayList<IVraag>();
         for (var themaInfo : InfoOpen) {
-            VragenList.add(new OpenVraag(themaInfo.punten(), themaInfo.title(), Arrays.stream(themaInfo.antwoorden()).toList()));
+            VragenList.add(new OpenVraag(new PuntenStrategie(), themaInfo.title(), Arrays.stream(themaInfo.antwoorden()).toList()));
         }
 
         for (var themaInfo2 : InfoMeerkeuze) {
-            VragenList.add(new MeerkeuzeVraag(themaInfo2.punten(), themaInfo2.title(), themaInfo2.correctAntwoord(), Arrays.stream(themaInfo2.antwoorden()).toList()));
+            VragenList.add(new MeerkeuzeVraag(new PuntenStrategie(), themaInfo2.title(), themaInfo2.correctAntwoord(), Arrays.stream(themaInfo2.antwoorden()).toList()));
         }
         return VragenList;
     }

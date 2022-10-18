@@ -1,31 +1,25 @@
 package Systeem.Vraag;
 
-import java.util.ArrayList;
+import Systeem.PuntenStrategie.IPuntenStrategie;
+
 import java.util.Arrays;
 import java.util.List;
 
-public class MeerkeuzeVraag implements IVraag {
-    private int punten;
-    private String vraagtekst;
-
+public class MeerkeuzeVraag extends Vraag {
     private List<String> antwoordKeuzeLijst;
 
-    private QuizVraagAntwoord quizVraagAntwoord;
     private final String correctAntwoord;
 
-    public MeerkeuzeVraag(int punten, String vraagtekst, String correctAntwoord, List<String> antwoordKeuzeLijst) {
-        this.punten = punten;
+    public MeerkeuzeVraag(IPuntenStrategie strategie, String vraagtekst, String correctAntwoord, List<String> antwoordKeuzeLijst) {
+        this.strategie = strategie;
         this.vraagtekst = vraagtekst;
         this.correctAntwoord = correctAntwoord;
         this.antwoordKeuzeLijst = antwoordKeuzeLijst;
     }
 
-    public void setQuizVraagAntwoord(QuizVraagAntwoord quizVraagAntwoord) {
-        this.quizVraagAntwoord = quizVraagAntwoord;
-    }
-
+    @Override
     public int getPunten() {
-        return punten;
+        return strategie.getMeerkeuzeVraagPunten();
     }
 
     public void setPunten(int punten) {
@@ -42,15 +36,7 @@ public class MeerkeuzeVraag implements IVraag {
         return tekst.toString();
     }
 
-    public void setVraagtekst(String vraagtekst) {
-        this.vraagtekst = vraagtekst;
-    }
-
-    public QuizVraagAntwoord getQuizVraagAntwoord() {
-        return quizVraagAntwoord;
-    }
-
     public List<String> getCorrectAntwoordList() {
-        return Arrays.stream(new String[] {correctAntwoord }).toList();
+        return Arrays.stream(new String[]{correctAntwoord}).toList();
     }
 }
