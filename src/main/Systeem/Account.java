@@ -3,6 +3,7 @@ package Systeem;
 import Systeem.PuntenStrategie.BonusPuntenStrategie;
 import Systeem.Vragenlijst.SpelerVragenlijst;
 
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,10 +11,12 @@ public class Account {
     private Quiz quiz;
     private ArrayList<SpelerVragenlijst> spelerVragenlijstList = new ArrayList<>();
     private String username, password;
+    private int saldo;
 
     public Account(String username, String password) {
         this.username = username;
         this.password = password;
+        this.saldo = 100;
     }
 
     public void setSpelerVragenlijst(SpelerVragenlijst spelerVragenlijst) {
@@ -25,13 +28,11 @@ public class Account {
     public String getPassword() {
         return password;
     }
-    public ArrayList<SpelerVragenlijst> getSpelerVragenlijst(){
-        return spelerVragenlijstList;
-    }
     public SpelerVragenlijst getSpelerVragenlijst(SpelerVragenlijst keuze) {
         return spelerVragenlijstList.stream().filter((list) -> list == keuze).findFirst().orElse(null);
     }
     public List<SpelerVragenlijst> toonVragenlijsten() {
+        spelerVragenlijstList.removeIf(spelerVragenlijst -> Period.between(spelerVragenlijst.getKoopdatum(), java.time.LocalDate.now()).getYears() == 1);
         return spelerVragenlijstList;
     }
     public void maakQuizMetVragen(SpelerVragenlijst vragenlijst) {
@@ -40,7 +41,8 @@ public class Account {
     public Quiz getQuiz() {
         return quiz;
     }
-    public void updateSaldo(int i) {
+    public void updateSaldo(int saldo) {
+        this.saldo += saldo;
     }
     public int checkScore() {
         return getQuiz().eindigQuiz();

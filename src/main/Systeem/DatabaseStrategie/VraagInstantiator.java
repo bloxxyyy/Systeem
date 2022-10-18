@@ -6,9 +6,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-record InfoOpenVraag (String title, String[] antwoorden) { }
-record InfoMeerkeuzeVraag (String title, String[] antwoorden, String correctAntwoord) { }
-
 public class VraagInstantiator {
     public static Map<Thema, ArrayList<InfoOpenVraag>> open = new HashMap<>();
     public static Map<Thema, ArrayList<InfoMeerkeuzeVraag>> meerkeuze = new HashMap<>();

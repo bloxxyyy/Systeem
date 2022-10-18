@@ -61,6 +61,11 @@ public class OOADCasus {
         System.out.println("Selecteer uw vragenlijst bij onderwerp");
 
         var lijsten = finch.getLijsten();
+
+        if(lijsten.size() == 0){
+            System.out.println("U heeft geen vragenlijsten koop ze in de Finch-Shop");
+        }
+
         for (int i = 0; i < lijsten.size(); i++) {
             System.out.println(i + ": " + finch.getOnderwerp(lijsten.get(i)));
         }

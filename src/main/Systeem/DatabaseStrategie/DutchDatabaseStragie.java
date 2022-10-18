@@ -13,8 +13,8 @@ public class DutchDatabaseStragie implements IDatabaseStrategie {
     @Override
     public void getVragenlijsten() {
         VraagInstantiator.instantiator();
-        VragenlijstList.add(new Vragenlijst(getiVraags(Thema.MUZIEK), "dance"));
-        VragenlijstList.add(new Vragenlijst(getiVraags(Thema.SPORT), "voetbal"));
+        VragenlijstList.add(new Vragenlijst(Thema.MUZIEK,getiVraags(Thema.MUZIEK), "dance"));
+        VragenlijstList.add(new Vragenlijst(Thema.SPORT ,getiVraags(Thema.SPORT), "voetbal"));
     }
 
     @Override
