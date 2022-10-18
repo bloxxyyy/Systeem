@@ -31,7 +31,7 @@ public class Finch {
     }
 
     public SpelerVragenlijst getVragenlijst(int choice2) {
-        return account.getSpelerVragenlijst(getLijsten().get(choice2));
+        return getLijsten().get(choice2);
     }
 
     public void createQuiz(SpelerVragenlijst vragenlijst) {

@@ -28,9 +28,7 @@ public class Account {
     public String getPassword() {
         return password;
     }
-    public SpelerVragenlijst getSpelerVragenlijst(SpelerVragenlijst keuze) {
-        return spelerVragenlijstList.stream().filter((list) -> list == keuze).findFirst().orElse(null);
-    }
+
     public List<SpelerVragenlijst> toonVragenlijsten() {
         spelerVragenlijstList.removeIf(spelerVragenlijst -> Period.between(spelerVragenlijst.getKoopdatum(), java.time.LocalDate.now()).getYears() == 1);
         return spelerVragenlijstList;
