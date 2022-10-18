@@ -9,13 +9,9 @@ import java.util.stream.Collectors;
 
 public class Vragenlijst {
     private String onderwerp;
-    private int prijs;
-    private int geldigheid = 1;
-    private Thema thema;
-    private ArrayList<IVraag> vraagList = new ArrayList<>();
+    private ArrayList<IVraag> vraagList;
 
-    public Vragenlijst(Thema thema, ArrayList<IVraag> vragen, String onderwerp){
-        this.thema = thema;
+    public Vragenlijst(ArrayList<IVraag> vragen, String onderwerp){
         this.vraagList = vragen;
         this.onderwerp = onderwerp;
     }

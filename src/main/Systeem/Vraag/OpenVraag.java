@@ -18,10 +18,6 @@ public class OpenVraag extends Vraag {
         return strategie.getOpenVraagPunten();
     }
 
-    public void setPunten(int punten) {
-        this.punten = punten;
-    }
-
     public String getVraagtekst() {
         return vraagtekst;
     }

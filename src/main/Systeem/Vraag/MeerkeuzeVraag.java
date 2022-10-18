@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class MeerkeuzeVraag extends Vraag {
-    private List<String> antwoordKeuzeLijst;
+    private final List<String> antwoordKeuzeLijst;
 
     private final String correctAntwoord;
 
@@ -20,10 +20,6 @@ public class MeerkeuzeVraag extends Vraag {
     @Override
     public int getPunten() {
         return strategie.getMeerkeuzeVraagPunten();
-    }
-
-    public void setPunten(int punten) {
-        this.punten = punten;
     }
 
     public String getVraagtekst() {

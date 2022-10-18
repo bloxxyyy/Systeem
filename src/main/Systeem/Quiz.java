@@ -10,8 +10,8 @@ import java.util.List;
 import java.util.Objects;
 
 public class Quiz {
-    private IBonusPuntenStrategie strategie;
-    private List<IVraag> vraagList;
+    private final IBonusPuntenStrategie strategie;
+    private final List<IVraag> vraagList;
     private ArrayList<QuizVraagAntwoord> quizVraagAntwoordList;
     private final Account account;
     private GespeeldeQuiz gespeeldeQuiz;
@@ -24,18 +24,12 @@ public class Quiz {
         this.strategie = strategie;
     }
 
-//    public void getVragen(SpelerVragenlijst lijst) {
-//        vraagList = account.getSpelerVragenlijst(lijst).getVragenlijst().getRandomVragen();
-//    }
-
     public List<IVraag> getVraagList() {
         return vraagList;
     }
-
     public String getVolgendeVraagTekst() {
         return vraagList.get(vraagIndex).getVraagtekst();
     }
-
     public void beantwoordVolgendeVraag(String givenAnswer) {
         if (quizVraagAntwoordList == null) quizVraagAntwoordList = new ArrayList<>();
         var quizVraag = new QuizVraagAntwoord(this, vraagList.get(vraagIndex), givenAnswer);
@@ -43,14 +37,12 @@ public class Quiz {
         quizVraagAntwoordList.add(quizVraag);
         vraagIndex++;
     }
-
     public void controleerGemaakteQuiz() {
-        gespeeldeQuiz = new GespeeldeQuiz(this, account, verstrekenTijd);
+        gespeeldeQuiz = new GespeeldeQuiz();
         gespeeldeQuiz.addPunten(strategie.calculateBonusPunten(verstrekenTijd));
         if (checkVragen()){ account.updateSaldo(2);gespeeldeQuiz.addPunten(strategie.getPuntenAlleVragenGoed());}
 
     }
-
     private boolean checkVragen() {
         boolean allesGoed = true;
 
@@ -72,15 +64,12 @@ public class Quiz {
 
         return allesGoed;
     }
-
     public void setVerstrekenTijd(int tijd) {
         verstrekenTijd = tijd;
     }
-
     public int getVerstrekenTijd() {
         return verstrekenTijd;
     }
-
     public int eindigQuiz() {
         controleerGemaakteQuiz();
         return gespeeldeQuiz.getPunten();

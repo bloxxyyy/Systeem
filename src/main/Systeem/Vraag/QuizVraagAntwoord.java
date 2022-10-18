@@ -13,15 +13,7 @@ public class QuizVraagAntwoord {
         Antwoord = antwoord;
     }
 
-    public Quiz getQuiz() {
-        return quiz;
-    }
-
     public IVraag getVraag() {
         return vraag;
-    }
-
-    public String getAntwoord() {
-        return Antwoord;
     }
 }

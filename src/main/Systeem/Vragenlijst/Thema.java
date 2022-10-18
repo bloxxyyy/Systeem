@@ -1,6 +1,3 @@
 package Systeem.Vragenlijst;
 
-public enum Thema {
-    SPORT,
-    Muziek
-}
+public enum Thema {SPORT, MUZIEK}

@@ -25,7 +25,7 @@ public class VraagInstantiator {
         openVraagLijstMuziek.add(new InfoOpenVraag("O Wie is de maker van All About That Bass?", new String[]{"Meghan Trainor", "trainor"}));
         openVraagLijstMuziek.add(new InfoOpenVraag("O Wie is de maker van Baby I?", new String[]{"Ariana Grande", "ariana"}));
         openVraagLijstMuziek.add(new InfoOpenVraag("O Wie is de maker van Cheap Thrills?", new String[]{"Sia", "Sia"}));
-        open.put(Thema.Muziek, openVraagLijstMuziek);
+        open.put(Thema.MUZIEK, openVraagLijstMuziek);
 
         var meerkeuzeVraagLijstMuziek = new ArrayList<InfoMeerkeuzeVraag>();
         meerkeuzeVraagLijstMuziek.add(new InfoMeerkeuzeVraag("M Wanneer is metal uitgevonden?", new String[]{"A 1990", "B 2002","C 2004","D 1999"},"A"));
@@ -38,7 +38,7 @@ public class VraagInstantiator {
         meerkeuzeVraagLijstMuziek.add(new InfoMeerkeuzeVraag("M Wie is de maker van All About That Bass?", new String[]{"A Meghan Trainor", "B Fifth Harmony","C DJ Snake","D Ariana Grande"}, "A"));
         meerkeuzeVraagLijstMuziek.add(new InfoMeerkeuzeVraag("M Wie is de maker van Baby I?", new String[]{"A The Chainsmokers", "B Fifth Harmony","C DJ Snake","D Ariana Grande"}, "D"));
         meerkeuzeVraagLijstMuziek.add(new InfoMeerkeuzeVraag("M Wie is de maker van Cheap Thrills?", new String[]{"A The Chainsmokers", "B Justin Bieber","C DJ Snake","D Sia"}, "D"));
-        meerkeuze.put(Thema.Muziek, meerkeuzeVraagLijstMuziek);
+        meerkeuze.put(Thema.MUZIEK, meerkeuzeVraagLijstMuziek);
 
         var openVraagLijstSport = new ArrayList<InfoOpenVraag>();
         openVraagLijstSport.add(new InfoOpenVraag("2O Wanneer is metal uitgevonden?", new String[]{"1990", "negetien"}));

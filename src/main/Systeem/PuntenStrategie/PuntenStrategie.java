@@ -5,7 +5,6 @@ public class PuntenStrategie implements IPuntenStrategie {
     public int getOpenVraagPunten() {
         return 2;
     }
-
     @Override
     public int getMeerkeuzeVraagPunten() {
         return 4;

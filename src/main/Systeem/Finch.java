@@ -1,101 +1,92 @@
 package Systeem;
 
+import Systeem.Authentication.Authenticator;
+import Systeem.Authentication.IAuthenticator;
 import Systeem.DatabaseStrategie.IDatabaseStrategie;
 import Systeem.Vragenlijst.SpelerVragenlijst;
 import Systeem.Vragenlijst.Vragenlijst;
 
-import java.time.Duration;
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Objects;
-import java.util.Random;
-import java.util.Scanner;
-
-import static Systeem.DatabaseStrategie.DucthDatabaseStragie.VragenlijstList;
+import java.util.List;
 
 public class Finch {
-    private ArrayList<Account> accounts = new ArrayList<>();
-    private FinchShop finchShop;
-    private Account loggedInAccount;
-    private IDatabaseStrategie strategie;
+
+    private final IAuthenticator Auth;
+
+    private Account account;
+    private Quiz quiz;
+    private final FinchShop finchShop;
 
     public Finch(IDatabaseStrategie strategie) {
         finchShop = new FinchShop();
-        this.strategie = strategie;
+        Auth = new Authenticator();
         strategie.getVragenlijsten();
-        //test purpose
-        accounts.add(new Account("test", "test"));
-
     }
 
-    public void showMainScreen() {
-        System.out.println("Welkom bij Finch");
-        System.out.println("Registreer of Login");
+    public List<SpelerVragenlijst> getLijsten() {
+        return account.toonVragenlijsten();
     }
 
-    public boolean Registreer(String[] account) {
-        if (accounts.size() != 0) {
-            for (Account a : accounts) {
-                if (Objects.equals(a.getUsername(), account[0])) {
-                    return false;
-                }
-            }
+    public String getOnderwerp(SpelerVragenlijst vragenlijst) {
+        return vragenlijst.getVragenlijst().getOnderwerp();
+    }
+
+    public SpelerVragenlijst getVragenlijst(int choice2) {
+        return account.getSpelerVragenlijst(getLijsten().get(choice2));
+    }
+
+    public void createQuiz(SpelerVragenlijst vragenlijst) {
+        account.maakQuizMetVragen(vragenlijst);
+        quiz = account.getQuiz();
+    }
+
+    public boolean registreer(String[] accountInput) {
+
+        if (!Auth.Registreer(accountInput)) return false;
+
+        var cadeaus = finchShop.krijgCadeau();
+        for (Vragenlijst cadeau : cadeaus) {
+            Auth.getAccounts().get(Auth.getAccounts().size() - 1).setSpelerVragenlijst(new SpelerVragenlijst(cadeau));
         }
 
-        var user = new Account(account[0], account[1]);
-        var cadeaus = krijgCadeau();
-        for (int i = 0; i < cadeaus.length; i++) {
-            user.setSpelerVragenlijst(new SpelerVragenlijst(cadeaus[i]));
-        }
-        accounts.add(user);
         return true;
     }
 
-    public boolean Login(String[] account) {
-        for (Account a : accounts) {
-            if (Objects.equals(a.getUsername(), account[0]) && Objects.equals(a.getPassword(), account[1])) {
-                loggedInAccount = a;
-                return true;
-            }
-        }
-        return false;
+    public boolean login(String[] accountInput) {
+        if (!Auth.Login(accountInput)) return false;
+
+        account = Auth.getLoggedInAccount();
+        return true;
     }
 
-    public ArrayList<SpelerVragenlijst> showVragenlijst() {
-        return loggedInAccount.getSpelerVragenlijst();
+    public int getLifetimeBest(SpelerVragenlijst vragenlijst) {
+        return vragenlijst.getLifetimeBest();
     }
 
-    // TODO implement
-    public Vragenlijst[] krijgCadeau() {
-        return new Random()
-                .ints(0, VragenlijstList.size())
-                .distinct()
-                .limit(2)
-                .mapToObj(VragenlijstList::get).toArray(Vragenlijst[]::new);
+    public int getVraaglistLength() {
+        return quiz.getVraagList().size();
     }
 
-    public Account getLoggedInAccount() {
-        return loggedInAccount;
+    public String getvolgendeVraag() {
+        return quiz.getVolgendeVraagTekst();
     }
 
-    public void speelQuiz(Scanner sc, SpelerVragenlijst keuze, Quiz quiz, Account account) {
-        Instant start = Instant.now();
-        for (int i = 0; i < quiz.getVraagList().size(); i++) {
-            var vraag = quiz.getVolgendeVraagTekst();
-            System.out.println(vraag);
-            var givenAnswer = sc.next();
-            quiz.beantwoordVolgendeVraag(givenAnswer);
-        }
-        Instant end = Instant.now();
-        quiz.setVerstrekenTijd((int) Duration.between(start, end).toSeconds());
+    public void beantwoordVolgendeVraag(String next) {
+        quiz.beantwoordVolgendeVraag(next);
+    }
 
-        var score = account.checkScore();
+    public void updateVerstrekenTijd(int tijd) {
+        quiz.setVerstrekenTijd(tijd);
+    }
 
-        var spelerVragenlijst = account.getSpelerVragenlijst(keuze);
+    public int checkScore() {
+        return account.checkScore();
+    }
 
-        spelerVragenlijst.updateLifetimeBest(score);
-        System.out.println("Gehaalde Score: " + score);
-        System.out.println("Quiz Tijd: " + quiz.getVerstrekenTijd() + " seconden");
-        System.out.println("Lifetime best: " + spelerVragenlijst.getLifetimeBest());
+    public void updateLifetimeBest(SpelerVragenlijst vragenlijst, int score) {
+        vragenlijst.updateLifetimeBest(score);
+    }
+
+    public int getVerstrekenTijd() {
+        return quiz.getVerstrekenTijd();
     }
 }
