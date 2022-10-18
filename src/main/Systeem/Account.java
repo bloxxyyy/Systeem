@@ -43,7 +43,7 @@ public class Account {
         this.saldo += saldo;
     }
     public int checkScore() {
-        return getQuiz().eindigQuiz();
+        return quiz.eindigQuiz();
     }
 
 }

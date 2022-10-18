@@ -9,11 +9,9 @@ public class Authenticator implements IAuthenticator {
     private final ArrayList<Account> accounts = new ArrayList<>();
 
     public boolean Registreer(String[] account) {
-        if (accounts.size() != 0) {
-            for (Account a : accounts) {
-                if (Objects.equals(a.getUsername(), account[0])) {
-                    return false;
-                }
+        for (Account a : accounts) {
+            if (Objects.equals(a.getUsername(), account[0])) {
+                return false;
             }
         }
 
