@@ -10,10 +10,12 @@ public class Account {
     private Quiz quiz;
     private ArrayList<SpelerVragenlijst> spelerVragenlijstList = new ArrayList<>();
     private String username, password;
+    private int saldo;
 
     public Account(String username, String password) {
         this.username = username;
         this.password = password;
+        this.saldo = 100;
     }
 
     public void setSpelerVragenlijst(SpelerVragenlijst spelerVragenlijst) {
@@ -40,7 +42,8 @@ public class Account {
     public Quiz getQuiz() {
         return quiz;
     }
-    public void updateSaldo(int i) {
+    public void updateSaldo(int saldo) {
+        this.saldo += saldo;
     }
     public int checkScore() {
         return getQuiz().eindigQuiz();
