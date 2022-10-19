@@ -32,7 +32,7 @@ public class Account {
         return spelerVragenlijstList.stream().filter((list) -> list == keuze).findFirst().orElse(null);
     }
     public List<SpelerVragenlijst> toonVragenlijsten() {
-        spelerVragenlijstList.removeIf(spelerVragenlijst -> Period.between(spelerVragenlijst.getKoopdatum(), java.time.LocalDate.now()).getYears() == 1);
+        spelerVragenlijstList.removeIf(spelerVragenlijst -> Period.between(spelerVragenlijst.getKoopdatum(), java.time.LocalDate.now()).getYears() == spelerVragenlijst.getVragenlijst().getMaximumTijd());
         return spelerVragenlijstList;
     }
     public void maakQuizMetVragen(SpelerVragenlijst vragenlijst) {
@@ -45,7 +45,7 @@ public class Account {
         this.saldo += saldo;
     }
     public int checkScore() {
-        return getQuiz().eindigQuiz();
+        return quiz.eindigQuiz();
     }
 
 }

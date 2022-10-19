@@ -11,7 +11,6 @@ import java.util.List;
 public class Finch {
 
     private final IAuthenticator Auth;
-
     private Account account;
     private Quiz quiz;
     private final FinchShop finchShop;

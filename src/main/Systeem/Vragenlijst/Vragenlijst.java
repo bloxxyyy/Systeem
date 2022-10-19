@@ -11,6 +11,8 @@ public class Vragenlijst {
     private String onderwerp;
     private ArrayList<IVraag> vraagList;
     private Thema thema;
+    private int prijs;
+    private int MaximumTijd = 1;
 
     public Vragenlijst(Thema thema, ArrayList<IVraag> vragen, String onderwerp){
         this.thema = thema;
@@ -28,5 +30,8 @@ public class Vragenlijst {
     }
     public String getOnderwerp() {
         return onderwerp;
+    }
+    public int getMaximumTijd() {
+        return MaximumTijd;
     }
 }
