@@ -6,6 +6,7 @@ import Systeem.Vragenlijst.SpelerVragenlijst;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Account {
     private Quiz quiz;
@@ -29,21 +30,50 @@ public class Account {
         return password;
     }
 
-    public List<SpelerVragenlijst> toonVragenlijsten() {
+    public String[] toonVragenlijsten() {
         spelerVragenlijstList.removeIf(spelerVragenlijst -> Period.between(spelerVragenlijst.getKoopdatum(), java.time.LocalDate.now()).getYears() == 1);
-        return spelerVragenlijstList;
+
+        List<String> ids = new ArrayList<>();
+        for (var svl: spelerVragenlijstList) {
+            ids.add(svl.getVragenlijst().getId());
+        }
+
+        return ids.toArray(new String[0]);
     }
-    public void maakQuizMetVragen(SpelerVragenlijst vragenlijst) {
-        this.quiz = new Quiz(this, vragenlijst.getVragenlijst().getRandomVragen(),new BonusPuntenStrategie());
+
+    public void maakQuizMetVragen(String vragenlijstId) {
+        var lijst = pakVragenlijst(vragenlijstId);
+        var vragen = lijst.getRandomVragen();
+        var strategy = new BonusPuntenStrategie();
+
+        this.quiz = new Quiz(this, vragen, strategy);
     }
-    public Quiz getQuiz() {
-        return quiz;
-    }
+
     public void updateSaldo(int saldo) {
         this.saldo += saldo;
     }
-    public int checkScore() {
-        return quiz.eindigQuiz();
+
+    public SpelerVragenlijst pakVragenlijst(String vragenlijstId) {
+        for (var svl: spelerVragenlijstList) {
+            if (Objects.equals(svl.getVragenlijst().getId(), vragenlijstId));
+                return svl;
+        }
+
+        return null;
     }
 
+    public String[] getVragen() {
+        return quiz.getVragen();
+    }
+
+    public void BeantwoordVolgendeVraagVoorActieveQuizVan(String vraagText, String antwoord) {
+        quiz.beantwoordVolgendeVraag(antwoord, vraagText);
+    }
+
+    public int eindigQuiz(String vragenlijstId) {
+        var score = quiz.eindigQuiz();
+        pakVragenlijst(vragenlijstId).updateLifetimeBest(score);
+        return score;
+
+    }
 }

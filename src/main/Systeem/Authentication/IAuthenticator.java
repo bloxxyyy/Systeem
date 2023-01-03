@@ -9,4 +9,6 @@ public interface IAuthenticator {
     public ArrayList<Account> getAccounts();
 
     int getLastMadeAccount();
+
+    Account pakGebruikerBijUsername(String username);
 }

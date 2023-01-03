@@ -1,6 +1,9 @@
 package Systeem.Vragenlijst;
 
+import Systeem.Vraag.IVraag;
+
 import java.time.LocalDate;
+import java.util.List;
 
 public class SpelerVragenlijst {
     private int lifetimeBest;
@@ -24,5 +27,9 @@ public class SpelerVragenlijst {
     }
     public LocalDate getKoopdatum() {
         return koopdatum;
+    }
+
+    public List<IVraag> getRandomVragen() {
+        return vragenlijst.getRandomVragen();
     }
 }

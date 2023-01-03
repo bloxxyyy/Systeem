@@ -38,6 +38,15 @@ public class Authenticator implements IAuthenticator {
         return accounts.size() - 1;
     }
 
+    @Override
+    public Account pakGebruikerBijUsername(String username) {
+        for (var account: accounts) {
+            if (Objects.equals(account.getUsername(), username)) return account;
+        }
+
+        return null;
+    }
+
     public Account getLoggedInAccount() {
         return loggedInAccount;
     }

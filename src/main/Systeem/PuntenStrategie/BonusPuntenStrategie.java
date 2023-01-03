@@ -3,7 +3,7 @@ package Systeem.PuntenStrategie;
 public class BonusPuntenStrategie implements IBonusPuntenStrategie {
 
     @Override
-    public int calculateBonusPunten(int tijd) {
+    public int calculate(int tijd) {
         return tijd/5;
     }
 

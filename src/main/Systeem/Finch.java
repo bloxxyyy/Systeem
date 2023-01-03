@@ -6,14 +6,11 @@ import Systeem.DatabaseStrategie.IDatabaseStrategie;
 import Systeem.Vragenlijst.SpelerVragenlijst;
 import Systeem.Vragenlijst.Vragenlijst;
 
-import java.util.List;
-
 public class Finch {
 
     private final IAuthenticator Auth;
 
     private Account account;
-    private Quiz quiz;
     private final FinchShop finchShop;
 
     public Finch(IDatabaseStrategie strategie) {
@@ -22,21 +19,13 @@ public class Finch {
         strategie.getVragenlijsten();
     }
 
-    public List<SpelerVragenlijst> getLijsten() {
+    public String[] getLijsten() {
         return account.toonVragenlijsten();
     }
 
-    public String getOnderwerp(SpelerVragenlijst vragenlijst) {
+    public String getOnderwerp(String vragenlijstId) {
+        var vragenlijst = account.pakVragenlijst(vragenlijstId);
         return vragenlijst.getVragenlijst().getOnderwerp();
-    }
-
-    public SpelerVragenlijst getVragenlijst(int choice2) {
-        return getLijsten().get(choice2);
-    }
-
-    public void createQuiz(SpelerVragenlijst vragenlijst) {
-        account.maakQuizMetVragen(vragenlijst);
-        quiz = account.getQuiz();
     }
 
     public boolean registreer(String[] accountInput) {
@@ -59,35 +48,28 @@ public class Finch {
         return true;
     }
 
-    public int getLifetimeBest(SpelerVragenlijst vragenlijst) {
-        return vragenlijst.getLifetimeBest();
+    public void beantwoordVolgendeVraag(String antwoord, String vraagText, String username) {
+        account = Auth.pakGebruikerBijUsername(username);
+        account.BeantwoordVolgendeVraagVoorActieveQuizVan(vraagText, antwoord);
     }
 
-    public int getVraaglistLength() {
-        return quiz.getVraagList().size();
+    public String[] aanvraagSpelenQuiz(String username) {
+        account = Auth.pakGebruikerBijUsername(username);
+        return account.toonVragenlijsten();
     }
 
-    public String getvolgendeVraag() {
-        return quiz.getVolgendeVraagTekst();
+    public void geefKeuzeVragenlijst(String vragenLijstId, String username) {
+        account = Auth.pakGebruikerBijUsername(username);
+        account.maakQuizMetVragen(vragenLijstId);
     }
 
-    public void beantwoordVolgendeVraag(String next) {
-        quiz.beantwoordVolgendeVraag(next);
+    public String[] getVragen(String username) {
+        account = Auth.pakGebruikerBijUsername(username);
+        return account.getVragen();
     }
 
-    public void updateVerstrekenTijd(int tijd) {
-        quiz.setVerstrekenTijd(tijd);
-    }
-
-    public int checkScore() {
-        return account.checkScore();
-    }
-
-    public void updateLifetimeBest(SpelerVragenlijst vragenlijst, int score) {
-        vragenlijst.updateLifetimeBest(score);
-    }
-
-    public int getVerstrekenTijd() {
-        return quiz.getVerstrekenTijd();
+    public int eindigQuiz(String username, String vragenlijstId) {
+        account = Auth.pakGebruikerBijUsername(username);
+        return account.eindigQuiz(vragenlijstId);
     }
 }

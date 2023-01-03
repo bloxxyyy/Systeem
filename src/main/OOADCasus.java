@@ -1,9 +1,5 @@
 import Systeem.DatabaseStrategie.DutchDatabaseStragie;
 import Systeem.Finch;
-import Systeem.Vragenlijst.SpelerVragenlijst;
-
-import java.time.Duration;
-import java.time.Instant;
 import java.util.Scanner;
 
 public class OOADCasus {
@@ -26,15 +22,23 @@ public class OOADCasus {
         }
 
         while (true) {
-            SpelerVragenlijst vragenlijst = kiezenOnderwerpBijThema(sc, finch);
+            var lijsten = finch.aanvraagSpelenQuiz(username);
+            for (var i = 0; i < lijsten.length; i++) {
+                System.out.println(i + " : " + lijsten[i]);
+            }
 
-            initializerenQuiz(finch, vragenlijst);
+            String vragenlijstId = sc.next();
 
-            Instant start = Instant.now();
-            spelenQuiz(sc, finch);
-            Instant end = Instant.now();
+            finch.geefKeuzeVragenlijst(vragenlijstId, username);
+            var vraagTexten = finch.getVragen(username);
 
-            eindigenQuiz(finch, vragenlijst, start, end);
+            for (String text : vraagTexten) {
+                System.out.println(text);
+                finch.beantwoordVolgendeVraag(sc.next(), text, username);
+            }
+
+            var score = finch.eindigQuiz(username, vragenlijstId);
+            System.out.println(score);
         }
     }
 
@@ -57,49 +61,13 @@ public class OOADCasus {
         return true;
     }
 
-    private static SpelerVragenlijst kiezenOnderwerpBijThema(Scanner sc, Finch finch) {
-        System.out.println("Selecteer uw vragenlijst bij onderwerp");
-
-        var lijsten = finch.getLijsten();
-
-        if(lijsten.size() == 0){
-            System.out.println("U heeft geen vragenlijsten koop ze in de Finch-Shop");
-        }
-
-        for (int i = 0; i < lijsten.size(); i++) {
-            System.out.println(i + ": " + finch.getOnderwerp(lijsten.get(i)));
-        }
-
-        return finch.getVragenlijst(sc.nextInt());
-    }
-
-    private static void initializerenQuiz(Finch finch, SpelerVragenlijst vragenlijst) {
-        finch.createQuiz(vragenlijst);
-        System.out.println("CurrentLifetimebest: " + finch.getLifetimeBest(vragenlijst));
-    }
-
-    private static void eindigenQuiz(Finch finch, SpelerVragenlijst vragenlijst, Instant start, Instant end) {
-        finch.updateVerstrekenTijd((int) Duration.between(start, end).toSeconds());
-
-        var score = finch.checkScore();
-        finch.updateLifetimeBest(vragenlijst, score);
-        System.out.println("Gehaalde Score: " + score);
-        System.out.println("Quiz Tijd: " + finch.getVerstrekenTijd() + " seconden");
-        System.out.println("Lifetime best: " + finch.getLifetimeBest(vragenlijst));
-    }
-
-    private static void spelenQuiz(Scanner sc, Finch finch) {
-        for (int i = 0; i < finch.getVraaglistLength(); i++) {
-            System.out.println(finch.getvolgendeVraag());
-            finch.beantwoordVolgendeVraag(sc.next());
-        }
-    }
-
+    static String username = "";
     private static String[] authenticatie(Scanner sc) {
         String[] account = new String[2];
         System.out.println("Uw gebruikersnaam:");
         String gebruikersnaam = sc.next();
         account[0] = gebruikersnaam;
+        username = gebruikersnaam;
         System.out.println("Uw wachtwoord:");
         String wachtwoord = sc.next();
         account[1] = wachtwoord;

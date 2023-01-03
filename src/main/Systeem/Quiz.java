@@ -3,8 +3,9 @@ package Systeem;
 import Systeem.PuntenStrategie.IBonusPuntenStrategie;
 import Systeem.Vraag.QuizVraagAntwoord;
 import Systeem.Vraag.IVraag;
-import Systeem.Vragenlijst.SpelerVragenlijst;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -12,11 +13,19 @@ import java.util.Objects;
 public class Quiz {
     private final IBonusPuntenStrategie strategie;
     private final List<IVraag> vraagList;
-    private ArrayList<QuizVraagAntwoord> quizVraagAntwoordList;
+    private ArrayList<QuizVraagAntwoord> quizVraagAntwoordList  = new ArrayList<>();
     private final Account account;
     private GespeeldeQuiz gespeeldeQuiz;
-    private int vraagIndex = 0;
-    private int verstrekenTijd = 0;
+
+    Instant start, end;
+    private void startTimer() {
+        start = Instant.now();
+    }
+
+    private int stopTimer() {
+        end = Instant.now();
+        return  (int) Duration.between(start, end).toSeconds();
+    }
 
     public Quiz(Account account, List<IVraag> vraagList, IBonusPuntenStrategie strategie) {
         this.account = account;
@@ -24,23 +33,14 @@ public class Quiz {
         this.strategie = strategie;
     }
 
-    public List<IVraag> getVraagList() {
-        return vraagList;
-    }
-    public String getVolgendeVraagTekst() {
-        return vraagList.get(vraagIndex).getVraagtekst();
-    }
-    public void beantwoordVolgendeVraag(String givenAnswer) {
-        if (quizVraagAntwoordList == null) quizVraagAntwoordList = new ArrayList<>();
-        var quizVraag = new QuizVraagAntwoord(this, vraagList.get(vraagIndex), givenAnswer);
-        vraagList.get(vraagIndex).setQuizVraagAntwoord(quizVraag);
-        quizVraagAntwoordList.add(quizVraag);
-        vraagIndex++;
-    }
-    public void controleerGemaakteQuiz() {
+    public void controleerGemaakteQuiz(int verstrekenTijd) {
         gespeeldeQuiz = new GespeeldeQuiz();
-        gespeeldeQuiz.addPunten(strategie.calculateBonusPunten(verstrekenTijd));
-        if (checkVragen()){ account.updateSaldo(2);gespeeldeQuiz.addPunten(strategie.getPuntenAlleVragenGoed());}
+        gespeeldeQuiz.addPunten(strategie.calculate(verstrekenTijd));
+
+        if (checkVragen()){
+            account.updateSaldo(2);
+            gespeeldeQuiz.addPunten(strategie.getPuntenAlleVragenGoed());
+        }
 
     }
     private boolean checkVragen() {
@@ -64,14 +64,38 @@ public class Quiz {
 
         return allesGoed;
     }
-    public void setVerstrekenTijd(int tijd) {
-        verstrekenTijd = tijd;
-    }
-    public int getVerstrekenTijd() {
-        return verstrekenTijd;
-    }
+
     public int eindigQuiz() {
-        controleerGemaakteQuiz();
+        var verstrekenTijd = stopTimer();
+        controleerGemaakteQuiz(verstrekenTijd);
         return gespeeldeQuiz.getPunten();
+    }
+
+    public String[] getVragen() {
+        List<String> vraagTexten = new ArrayList<>();
+        for (var vraag: vraagList) {
+            vraagTexten.add(vraag.getVraagtekst());
+        }
+
+        startTimer();
+
+        return vraagTexten.toArray(new String[0]);
+    }
+
+    public void beantwoordVolgendeVraag(String givenAnswer, String vraagText) {
+        var vraag = getVraag(vraagText);
+        var quizVraag = new QuizVraagAntwoord(this, vraag, givenAnswer);
+        addToQuizVraagLijst(quizVraag);
+    }
+
+    private void addToQuizVraagLijst(QuizVraagAntwoord quizVraag) {
+        quizVraagAntwoordList.add(quizVraag);
+    }
+
+    private IVraag getVraag(String vraagText) {
+        for (var vraag: vraagList) {
+            if (Objects.equals(vraag.getVraagtekst(), vraagText)) return vraag;
+        }
+        return null;
     }
 }

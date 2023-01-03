@@ -12,10 +12,13 @@ public class Vragenlijst {
     private ArrayList<IVraag> vraagList;
     private Thema thema;
 
-    public Vragenlijst(Thema thema, ArrayList<IVraag> vragen, String onderwerp){
+    private String id;
+
+    public Vragenlijst(Thema thema, ArrayList<IVraag> vragen, String onderwerp, String id){
         this.thema = thema;
         this.vraagList = vragen;
         this.onderwerp = onderwerp;
+        this.id = id;
     }
 
     public List<IVraag> getRandomVragen() {
@@ -28,5 +31,9 @@ public class Vragenlijst {
     }
     public String getOnderwerp() {
         return onderwerp;
+    }
+
+    public String getId() {
+        return id;
     }
 }
