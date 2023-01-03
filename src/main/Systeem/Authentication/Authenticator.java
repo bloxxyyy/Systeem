@@ -10,7 +10,7 @@ public class Authenticator implements IAuthenticator {
 
     public boolean Registreer(String[] account) {
         for (Account a : accounts) {
-            if (Objects.equals(a.getUsername(), account[0])) {
+            if (Objects.equals(a.getGebruiker(), account[0])) {
                 return false;
             }
         }
@@ -19,10 +19,15 @@ public class Authenticator implements IAuthenticator {
         return true;
     }
 
-    public boolean Login(String[] account) {
+    public boolean login(String gebruikersnaam, String wachtwoord) {
+        ArrayList<Account> accounts = getAccounts();
+        setLoggedInToFalse();
+
         for (Account a : accounts) {
-            if (Objects.equals(a.getUsername(), account[0]) && Objects.equals(a.getPassword(), account[1])) {
-                loggedInAccount = a;
+            String username = a.getGebruiker();
+            String password = a.getPassword();
+            if(Objects.equals(gebruikersnaam, username) && Objects.equals(wachtwoord, password)){
+                setLoggedInAccount(a);
                 return true;
             }
         }
@@ -41,13 +46,50 @@ public class Authenticator implements IAuthenticator {
     @Override
     public Account pakGebruikerBijUsername(String gebruikersnaam) {
         for (var account: accounts) {
-            if (Objects.equals(account.getUsername(), gebruikersnaam)) return account;
+            if (Objects.equals(account.getGebruiker(), gebruikersnaam)) return account;
         }
 
         return null;
     }
 
+    public void setLoggedInToFalse(){
+        loggedInAccount = null;
+    }
+
+    public void setLoggedInAccount(Account account){
+        this.loggedInAccount = account;
+    }
+
     public Account getLoggedInAccount() {
         return loggedInAccount;
+    }
+
+    public String[] haalRegistratieGegevensOp(){
+        return new String[] {"Gebruikersnaam:", "Wachtwoord:"};
+    }
+
+    public boolean probeerRegistratie(String gebruikersnaam, String wachtwoord){
+        boolean inGebruik = gebruikersnaamAllInGebruik(gebruikersnaam);
+        boolean registratieGelukt = false;
+        if(!inGebruik){
+            Account account = new Account(gebruikersnaam, wachtwoord);
+            registratieGelukt = voegToeAanAccountLijst(account);
+        }
+
+        return registratieGelukt;
+    }
+
+    public boolean gebruikersnaamAllInGebruik(String gebruikersnaam){
+        for (Account a : accounts) {
+            if (Objects.equals(a.getGebruiker(), gebruikersnaam)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public boolean voegToeAanAccountLijst(Account account){
+        return accounts.add(account);
     }
 }

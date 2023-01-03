@@ -20,10 +20,10 @@ public class Account {
         this.saldo = 100;
     }
 
-    public void setSpelerVragenlijst(SpelerVragenlijst spelerVragenlijst) {
+    public void addSpelerVragenlijst(SpelerVragenlijst spelerVragenlijst) {
         spelerVragenlijstList.add(spelerVragenlijst);
     }
-    public String getUsername() {
+    public String getGebruiker() {
         return gebruikersnaam;
     }
     public String getPassword() {

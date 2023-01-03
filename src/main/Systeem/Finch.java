@@ -19,33 +19,47 @@ public class Finch {
         strategie.getVragenlijsten();
     }
 
-    public String[] getLijsten() {
-        return account.toonVragenlijsten();
+//    public boolean registreer(String[] accountInput) {
+//
+//        if (!Auth.Registreer(accountInput)) return false;
+//
+//        var cadeaus = finchShop.krijgCadeau();
+//        var accountIndex = Auth.getLastMadeAccount();
+//        for (Vragenlijst cadeau : cadeaus) {
+//            Auth.getAccounts().get(accountIndex).addSpelerVragenlijst(new SpelerVragenlijst(cadeau));
+//        }
+//
+//        return true;
+//    }
+
+    public String[] aangevenRegistreren() {
+        return Auth.haalRegistratieGegevensOp();
     }
 
-    public String getOnderwerp(String vragenlijstId) {
-        var vragenlijst = account.pakVragenlijst(vragenlijstId);
-        return vragenlijst.getVragenlijst().getOnderwerp();
-    }
-
-    public boolean registreer(String[] accountInput) {
-
-        if (!Auth.Registreer(accountInput)) return false;
-
-        var cadeaus = finchShop.krijgCadeau();
-        var accountIndex = Auth.getLastMadeAccount();
-        for (Vragenlijst cadeau : cadeaus) {
-            Auth.getAccounts().get(accountIndex).setSpelerVragenlijst(new SpelerVragenlijst(cadeau));
+    public void geefGegevens(String gebruikersnaam, String wachtwoord) {
+        boolean registratieGelukt = Auth.probeerRegistratie(gebruikersnaam, wachtwoord);
+        if (!registratieGelukt) {
+            System.out.println("error");
+            return;
         }
 
-        return true;
+        Vragenlijst[] cadeaus = finchShop.krijgCadeau();
+        Account acc = Auth.pakGebruikerBijUsername(gebruikersnaam);
+        for (Vragenlijst cadeau : cadeaus) {
+            SpelerVragenlijst lijst = new SpelerVragenlijst(cadeau);
+            acc.addSpelerVragenlijst(lijst);
+        }
     }
 
-    public boolean login(String[] accountInput) {
-        if (!Auth.Login(accountInput)) return false;
+    public boolean login(String gebruikersnaam, String wachtwoord) {
+        boolean isLoggedIn;
+        isLoggedIn = Auth.login(gebruikersnaam, wachtwoord);
+        if (isLoggedIn) {
+            Account account = Auth.getLoggedInAccount();
+            setLoggedInAccount(account);
+        }
 
-        account = Auth.getLoggedInAccount();
-        return true;
+        return isLoggedIn;
     }
 
     public void beantwoordVolgendeVraag(String antwoord, String vraagText, String gebruikersnaam) {
@@ -68,8 +82,12 @@ public class Finch {
         return account.getVragen();
     }
 
-    public int eindigQuiz(String gebruikersnaam, String spelerVragenlijstIds) {
+    public int eindigQuiz(String gebruikersnaam, String spelerVragenlijstId) {
         account = Auth.pakGebruikerBijUsername(gebruikersnaam);
-        return account.eindigQuiz(spelerVragenlijstIds);
+        return account.eindigQuiz(spelerVragenlijstId);
+    }
+
+    public void setLoggedInAccount(Account account) {
+        this.account = account;
     }
 }
