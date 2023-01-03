@@ -10,5 +10,5 @@ public interface IAuthenticator {
 
     int getLastMadeAccount();
 
-    Account pakGebruikerBijUsername(String username);
+    Account pakGebruikerBijUsername(String gebruikersnaam);
 }

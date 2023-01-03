@@ -39,9 +39,9 @@ public class Authenticator implements IAuthenticator {
     }
 
     @Override
-    public Account pakGebruikerBijUsername(String username) {
+    public Account pakGebruikerBijUsername(String gebruikersnaam) {
         for (var account: accounts) {
-            if (Objects.equals(account.getUsername(), username)) return account;
+            if (Objects.equals(account.getUsername(), gebruikersnaam)) return account;
         }
 
         return null;

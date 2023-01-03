@@ -22,23 +22,23 @@ public class OOADCasus {
         }
 
         while (true) {
-            var lijsten = finch.aanvraagSpelenQuiz(username);
+            var lijsten = finch.aanvraagSpelenQuiz(gebruikersnaam);
             for (var i = 0; i < lijsten.length; i++) {
                 System.out.println(i + " : " + lijsten[i]);
             }
 
-            String vragenlijstId = sc.next();
+            String spelerVragenlijstIds = sc.next();
 
-            finch.geefKeuzeVragenlijst(vragenlijstId, username);
-            var vraagTexten = finch.getVragen(username);
+            finch.geefKeuzeVragenlijst(spelerVragenlijstIds, gebruikersnaam);
+            var vraagTexten = finch.startQuiz(gebruikersnaam);
 
             for (String text : vraagTexten) {
                 System.out.println(text);
-                finch.beantwoordVolgendeVraag(sc.next(), text, username);
+                finch.beantwoordVolgendeVraag(sc.next(), text, gebruikersnaam);
             }
 
-            var score = finch.eindigQuiz(username, vragenlijstId);
-            System.out.println(score);
+            var score = finch.eindigQuiz(gebruikersnaam, spelerVragenlijstIds);
+            System.out.println("score: " +  score);
         }
     }
 
@@ -61,13 +61,13 @@ public class OOADCasus {
         return true;
     }
 
-    static String username = "";
+    static String gebruikersnaam = "";
     private static String[] authenticatie(Scanner sc) {
         String[] account = new String[2];
         System.out.println("Uw gebruikersnaam:");
         String gebruikersnaam = sc.next();
         account[0] = gebruikersnaam;
-        username = gebruikersnaam;
+        gebruikersnaam = gebruikersnaam;
         System.out.println("Uw wachtwoord:");
         String wachtwoord = sc.next();
         account[1] = wachtwoord;

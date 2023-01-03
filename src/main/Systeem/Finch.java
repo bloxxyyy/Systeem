@@ -48,28 +48,28 @@ public class Finch {
         return true;
     }
 
-    public void beantwoordVolgendeVraag(String antwoord, String vraagText, String username) {
-        account = Auth.pakGebruikerBijUsername(username);
+    public void beantwoordVolgendeVraag(String antwoord, String vraagText, String gebruikersnaam) {
+        account = Auth.pakGebruikerBijUsername(gebruikersnaam);
         account.BeantwoordVolgendeVraagVoorActieveQuizVan(vraagText, antwoord);
     }
 
-    public String[] aanvraagSpelenQuiz(String username) {
-        account = Auth.pakGebruikerBijUsername(username);
+    public String[] aanvraagSpelenQuiz(String gebruikersnaam) {
+        account = Auth.pakGebruikerBijUsername(gebruikersnaam);
         return account.toonVragenlijsten();
     }
 
-    public void geefKeuzeVragenlijst(String vragenLijstId, String username) {
-        account = Auth.pakGebruikerBijUsername(username);
-        account.maakQuizMetVragen(vragenLijstId);
+    public void geefKeuzeVragenlijst(String spelerVragenlijstIds, String gebruikersnaam) {
+        account = Auth.pakGebruikerBijUsername(gebruikersnaam);
+        account.maakQuizMetVragen(spelerVragenlijstIds);
     }
 
-    public String[] getVragen(String username) {
-        account = Auth.pakGebruikerBijUsername(username);
+    public String[] startQuiz(String gebruikersnaam) {
+        account = Auth.pakGebruikerBijUsername(gebruikersnaam);
         return account.getVragen();
     }
 
-    public int eindigQuiz(String username, String vragenlijstId) {
-        account = Auth.pakGebruikerBijUsername(username);
-        return account.eindigQuiz(vragenlijstId);
+    public int eindigQuiz(String gebruikersnaam, String spelerVragenlijstIds) {
+        account = Auth.pakGebruikerBijUsername(gebruikersnaam);
+        return account.eindigQuiz(spelerVragenlijstIds);
     }
 }

@@ -82,9 +82,9 @@ public class Quiz {
         return vraagTexten.toArray(new String[0]);
     }
 
-    public void beantwoordVolgendeVraag(String givenAnswer, String vraagText) {
+    public void beantwoordVolgendeVraag(String antwoord, String vraagText) {
         var vraag = getVraag(vraagText);
-        var quizVraag = new QuizVraagAntwoord(this, vraag, givenAnswer);
+        var quizVraag = new QuizVraagAntwoord(this, vraag, antwoord);
         addToQuizVraagLijst(quizVraag);
     }
 

@@ -11,11 +11,11 @@ import java.util.Objects;
 public class Account {
     private Quiz quiz;
     private ArrayList<SpelerVragenlijst> spelerVragenlijstList = new ArrayList<>();
-    private String username, password;
+    private String gebruikersnaam, password;
     private int saldo;
 
-    public Account(String username, String password) {
-        this.username = username;
+    public Account(String gebruikersnaam, String password) {
+        this.gebruikersnaam = gebruikersnaam;
         this.password = password;
         this.saldo = 100;
     }
@@ -24,7 +24,7 @@ public class Account {
         spelerVragenlijstList.add(spelerVragenlijst);
     }
     public String getUsername() {
-        return username;
+        return gebruikersnaam;
     }
     public String getPassword() {
         return password;
@@ -41,8 +41,8 @@ public class Account {
         return ids.toArray(new String[0]);
     }
 
-    public void maakQuizMetVragen(String vragenlijstId) {
-        var lijst = pakVragenlijst(vragenlijstId);
+    public void maakQuizMetVragen(String spelerVragenlijstId) {
+        var lijst = pakVragenlijst(spelerVragenlijstId);
         var vragen = lijst.getRandomVragen();
         var strategy = new BonusPuntenStrategie();
 
@@ -55,8 +55,9 @@ public class Account {
 
     public SpelerVragenlijst pakVragenlijst(String vragenlijstId) {
         for (var svl: spelerVragenlijstList) {
-            if (Objects.equals(svl.getVragenlijst().getId(), vragenlijstId));
+            if (Objects.equals(svl.getVragenlijst().getId(), vragenlijstId)){
                 return svl;
+            }
         }
 
         return null;
